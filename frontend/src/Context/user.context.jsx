@@ -34,7 +34,7 @@ export const ContextProvider = ({ children }) => {
         console.log(error.message || "An unexpected error occurred");
       }
     } finally {
-      setLoading(true);
+      setLoading(false);
     }
   };
 
@@ -93,7 +93,49 @@ export const ContextProvider = ({ children }) => {
       setLoading(false);
     }
   };
+  const logout = async (navigate) => {
+    try {
+      const { data } = await axios.get(`${backend_url}/auth/logout`, {
+        withCredentials: true,
+      });
 
+      if (data.success) {
+        setUser(null); // Clear user context
+        navigate("/register"); // Redirect to register page
+      } else {
+        console.log(data.msg || "Logout failed");
+      }
+    } catch (error) {
+      if (error.response?.data?.msg) {
+        console.log(error.response.data.msg); // Backend error message
+      } else {
+        console.log(error.message || "Logout failed");
+      }
+    }
+  };
+
+  const reviewCode = async (code, setReview, setreviewLoad) => {
+    setreviewLoad(true);
+    try {
+      if (!code) {
+        console.log("Code is need to review");
+      }
+      const { data } = await axios.post(
+        `${backend_url}/ai/review`,
+        { code },
+        { withCredentials: true }
+      );
+      setReview(data.review);
+    } catch (error) {
+      if (error.response?.data?.msg) {
+        console.log(error.response.data.msg); // Backend error message
+      } else {
+        console.log(error.message || "Unable to review the code !");
+      }
+    } finally {
+      setreviewLoad(false);
+    }
+  };
   return (
     <UserContext.Provider
       value={{
@@ -103,6 +145,8 @@ export const ContextProvider = ({ children }) => {
         setLoading,
         signup,
         login,
+        logout,
+        reviewCode,
         checkAuth,
       }}
     >

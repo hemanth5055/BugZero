@@ -14,12 +14,9 @@ export default function Register() {
     checkAuth(navigate); // runs only once
   }, []);
 
-  if (loading) {
-    return <Loading />;
-  }
-
   return (
     <div className="w-full h-full flex">
+      {loading ? <Loading></Loading> : ""}
       <div className="quote flex justify-center items-center w-[45%] bg-black">
         <h3 className="font-mont text-[25px] text-white text-center font-medium px-4">
           AI-powered code reviews with Gemini. Catch bugs, improve code, and
