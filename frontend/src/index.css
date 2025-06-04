@@ -3,3 +3,9 @@
 @theme {
   --font-mont: "Montserrat", sans-serif;
 }
+.my-code-editor textarea:focus,
+.my-code-editor textarea:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
+}

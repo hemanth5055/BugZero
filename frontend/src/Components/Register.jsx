@@ -7,7 +7,7 @@ export default function Register() {
   return (
     <div className="w-full h-full flex">
       <div className="quote flex justify-center items-center w-[45%]">
-        <h3 className="font-mont text-[25px] text-center font-medium">
+        <h3 className="font-mont text-[25px] text-white text-center font-medium">
           AI-powered code reviews with Gemini. Catch bugs, improve code, and
           build better&faster.
         </h3>

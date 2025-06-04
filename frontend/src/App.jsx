@@ -5,7 +5,7 @@ import Home from "./Components/home";
 import Navbar from "./Components/Navbar";
 export default function App() {
   return (
-    <div className="w-full h-screen p-5 flex flex-col">
+    <div className="w-full h-screen p-5 flex flex-col bg-black">
       <div className="h-[50px]">
         <Navbar></Navbar>
       </div>
