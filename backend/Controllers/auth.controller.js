@@ -92,3 +92,7 @@ export async function logout(req, res) {
     .status(200)
     .json({ success: true, msg: "Logged out successfully" });
 }
+
+export async function checkAuth(req, res) {
+  return res.status(200).json({ success: true, user: req.user });
+}

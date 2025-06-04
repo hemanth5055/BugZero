@@ -1,13 +1,17 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import MarkdownPreview from "@uiw/react-markdown-preview";
 import "prismjs/themes/prism-tomorrow.css";
 import Editor from "react-simple-code-editor";
 import prism from "prismjs";
 import "prismjs/components/prism-javascript";
+import { UserContext } from "../Context/user.context";
+import Loading from "./Loading";
+import { useNavigate } from "react-router-dom";
 
 export default function Home() {
   const [code, setCode] = useState(`function Test () { return "hello" }`);
-
+  const { checkAuth, user, loading } = useContext(UserContext);
+  const navigate = useNavigate();
   const source = `
 Okay, here's a review of the JavaScript code snippet, formatted in Markdown:
 
@@ -59,7 +63,13 @@ const addNumbers = (a, b) => {
 
 The original code works but can be improved with context and readability. Using arrow functions with or without type checking depends on your use case.
 `;
+  useEffect(() => {
+    checkAuth(navigate); // runs only once
+  }, []);
 
+  if (loading) {
+    return <Loading></Loading>;
+  }
   return (
     <div className="w-full h-full flex flex-col">
       <div className="w-full flex-grow flex gap-2 px-2 mt-2">

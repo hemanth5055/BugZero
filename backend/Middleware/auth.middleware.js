@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import { config } from "dotenv";
 config();
-export async function checkAuth(req, res, next) {
+export async function verifyToken(req, res, next) {
   const token = req.cookies.token;
   try {
     if (!token) {

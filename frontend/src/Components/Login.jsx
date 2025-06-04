@@ -1,8 +1,12 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { UserContext } from "../Context/user.context";
+import { useNavigate } from "react-router-dom";
 
 export default function Login({ changeMode }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { login } = useContext(UserContext);
+  const navigate = useNavigate();
   return (
     <div className="flex flex-col gap-5  rounded-[10px] p-4">
       <div className="flex flex-col gap-1">
@@ -27,7 +31,12 @@ export default function Login({ changeMode }) {
         />
       </div>
 
-      <div className="flex justify-center bg-white font-mont font-medium h-[40px] text-black rounded-[10px] items-center cursor-pointer mt-2">
+      <div
+        className="flex justify-center bg-white font-mont font-medium h-[40px] text-black rounded-[10px] items-center cursor-pointer mt-2"
+        onClick={() => {
+          login(email, password, navigate);
+        }}
+      >
         Login
       </div>
       <h4 className="font-mont font-semibold text-center text-white ">

@@ -10,9 +10,9 @@ export const setTokenAsCookie = (user, res) => {
 
   //res.cookie(name,value,options)
   res.cookie("token", token, {
-    httpOnly: true, 
+    httpOnly: true,
     sameSite: "none",
-    secure: process.env.NODE_ENV === "production",
+    secure: true,
     maxAge: 7 * 24 * 60 * 60 * 1000,
   });
 };
