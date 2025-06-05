@@ -12,7 +12,7 @@ const app = express(); //instance of express
 app.use(
   //cross origin resource sharing
   cors({
-    origin: "http://localhost:5173",
+    origin: `${process.env.FRONTEND_URI}`,
     methods: ["GET", "POST"],
     credentials: true,
   })
