@@ -44,7 +44,7 @@ export default function Signup({ changeMode }) {
       <div
         className="flex justify-center bg-white font-mont font-medium h-[40px] text-black rounded-[10px] items-center cursor-pointer mt-2"
         onClick={() => {
-          signup(name, email, password);
+          signup(name, email, password, navigate);
         }}
       >
         Sigup

@@ -1,5 +1,6 @@
 import { createContext, useState } from "react";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
 
 export const UserContext = createContext();
 
@@ -15,6 +16,11 @@ export const ContextProvider = ({ children }) => {
         throw new Error("All fields are required");
       }
 
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        throw new Error("Invalid email format");
+      }
+
       const { data } = await axios.post(
         `${backend_url}/auth/signup`,
         { name, email, password },
@@ -22,16 +28,16 @@ export const ContextProvider = ({ children }) => {
       );
 
       if (data.success) {
-        console.log("Signup Successful");
-        navigate && navigate("/");
+        navigate("/");
+        toast.info("Signup Successful");
       } else {
-        console.log(data.msg || "Signup failed");
+        toast.info(data.msg || "Signup failed");
       }
     } catch (error) {
       if (error.response?.data?.msg) {
-        console.log(error.response.data.msg);
+        toast.info(error.response.data.msg);
       } else {
-        console.log(error.message || "An unexpected error occurred");
+        toast.info(error.message || "An unexpected error occurred");
       }
     } finally {
       setLoading(false);
@@ -45,6 +51,11 @@ export const ContextProvider = ({ children }) => {
         throw new Error("Email and password are required");
       }
 
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        throw new Error("Invalid email format");
+      }
+
       const { data } = await axios.post(
         `${backend_url}/auth/login`,
         { email, password },
@@ -52,16 +63,16 @@ export const ContextProvider = ({ children }) => {
       );
 
       if (data.success) {
-        console.log("Login Successful");
+        toast.info("Login Successful");
         navigate && navigate("/");
       } else {
-        console.log(data.msg || "Login failed");
+        toast.info(data.msg || "Login failed");
       }
     } catch (error) {
       if (error.response?.data?.msg) {
-        console.log(error.response.data.msg);
+        toast.info(error.response.data.msg);
       } else {
-        console.log(error.message || "An unexpected error occurred");
+        toast.info(error.message || "An unexpected error occurred");
       }
     } finally {
       setLoading(false);
@@ -80,19 +91,20 @@ export const ContextProvider = ({ children }) => {
         navigate && navigate("/");
       } else {
         navigate && navigate("/register");
-        console.log(data.msg || "Unauthorized");
+        // toast.info(data.msg || "Unauthorized");
       }
     } catch (error) {
       navigate && navigate("/register");
       if (error.response?.data?.msg) {
-        console.log(error.response.data.msg);
+        // toast.info(error.response.data.msg);
       } else {
-        console.log(error.message || "An unexpected error occurred");
+        // toast.info(error.message || "An unexpected error occurred");
       }
     } finally {
       setLoading(false);
     }
   };
+
   const logout = async (navigate) => {
     try {
       const { data } = await axios.get(`${backend_url}/auth/logout`, {
@@ -100,16 +112,17 @@ export const ContextProvider = ({ children }) => {
       });
 
       if (data.success) {
-        setUser(null); // Clear user context
-        navigate("/register"); // Redirect to register page
+        setUser(null);
+        navigate("/register");
+        toast.info("Logged out successfully");
       } else {
-        console.log(data.msg || "Logout failed");
+        toast.info(data.msg || "Logout failed");
       }
     } catch (error) {
       if (error.response?.data?.msg) {
-        console.log(error.response.data.msg); // Backend error message
+        toast.info(error.response.data.msg);
       } else {
-        console.log(error.message || "Logout failed");
+        toast.info(error.message || "Logout failed");
       }
     }
   };
@@ -118,8 +131,10 @@ export const ContextProvider = ({ children }) => {
     setreviewLoad(true);
     try {
       if (!code) {
-        console.log("Code is need to review");
+        toast.info("Code is required to review");
+        return;
       }
+
       const { data } = await axios.post(
         `${backend_url}/ai/review`,
         { code },
@@ -128,14 +143,15 @@ export const ContextProvider = ({ children }) => {
       setReview(data.review);
     } catch (error) {
       if (error.response?.data?.msg) {
-        console.log(error.response.data.msg); // Backend error message
+        toast.info(error.response.data.msg);
       } else {
-        console.log(error.message || "Unable to review the code !");
+        toast.info(error.message || "Unable to review the code!");
       }
     } finally {
       setreviewLoad(false);
     }
   };
+
   return (
     <UserContext.Provider
       value={{
@@ -148,6 +164,7 @@ export const ContextProvider = ({ children }) => {
         logout,
         reviewCode,
         checkAuth,
+        ToastContainer,
       }}
     >
       {children}
