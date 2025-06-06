@@ -14,13 +14,18 @@ export default function Navbar() {
         </h1>
       </div>
       {user ? (
-        <div
-          className="w-[40px] h-[40px] flex justify-center items-center cursor-pointer"
-          onClick={() => {
-            logout(navigate);
-          }}
-        >
-          <IoLogOut size={25} className="text-white" />
+        <div className="flex gap-6 items-center">
+          <div className="inline-block cursor-pointer items-center justify-center rounded-xl border-[1.58px] border-zinc-600 bg-zinc-950 px-4 py-2 font-medium text-slate-200 shadow-md transition-all duration-300 hover:[transform:translateY(-.335rem)] hover:shadow-xl">
+            <h3 className="text-white font-mont">Credits : {user.credits}</h3>
+          </div>
+          <div
+            className="w-[40px] h-[40px] flex justify-center items-center cursor-pointer"
+            onClick={() => {
+              logout(navigate);
+            }}
+          >
+            <IoLogOut size={25} className="text-white" />
+          </div>
         </div>
       ) : (
         ""

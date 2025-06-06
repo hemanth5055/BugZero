@@ -87,6 +87,7 @@ export const ContextProvider = ({ children }) => {
       });
 
       if (data.success && data.user) {
+        console.log(data.user);
         setUser(data.user);
         navigate && navigate("/");
       } else {
@@ -141,6 +142,7 @@ export const ContextProvider = ({ children }) => {
         { withCredentials: true }
       );
       setReview(data.review);
+      setUser((user) => ({ ...user, credits: data.credits }));
     } catch (error) {
       if (error.response?.data?.msg) {
         toast.info(error.response.data.msg);

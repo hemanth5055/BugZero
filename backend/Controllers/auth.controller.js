@@ -68,6 +68,7 @@ export async function login(req, res) {
       _id: userInDb._id,
       name: userInDb.name,
       email: userInDb.email,
+      credits: userInDb.credits,
     };
     // Set token as cookie
     setTokenAsCookie(userObj, res);
