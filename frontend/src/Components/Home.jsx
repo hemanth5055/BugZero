@@ -26,7 +26,7 @@ export default function Home() {
       {loading ? <Loading></Loading> : ""}
       {reviewLoad ? <LoadingReview></LoadingReview> : ""}
       <div className="w-full flex-grow flex gap-2 px-2 mt-2">
-        <div className="w-[50%] h-[650px] rounded-2xl overflow-auto bg-[#1E1E1E] text-white">
+        <div className=" relative w-[50%] h-[700px] rounded-2xl overflow-auto bg-[#1E1E1E] text-white">
           <Editor
             className="my-code-editor"
             value={code}
@@ -45,8 +45,16 @@ export default function Home() {
               color: "#f8f8f2",
             }}
           />
+          <div
+            className="bg-white absolute z-10 bottom-3 right-3 px-4 py-2 text-[15px] font-mont text-black flex justify-center items-center rounded-[10px] cursor-pointer font-medium"
+            onClick={() => {
+              reviewCode(code, setReview, setreviewLoad);
+            }}
+          >
+            Review
+          </div>
         </div>
-        <div className="w-[50%] h-[650px] rounded-2xl overflow-y-scroll">
+        <div className="w-[50%] h-[700px] rounded-2xl overflow-y-scroll">
           <MarkdownPreview
             source={review}
             style={{
@@ -56,7 +64,7 @@ export default function Home() {
               borderRadius: "12px",
               fontFamily: "monospace",
               fontSize: 16,
-              height: "650px",
+              height: "700px",
               overflowY: "scroll",
               lineHeight: 1.6,
             }}
@@ -67,16 +75,6 @@ export default function Home() {
               },
             }}
           />
-        </div>
-      </div>
-      <div className="h-[60px] w-full flex p-2">
-        <div
-          className="bg-white  px-4 py-2 text-[15px] font-mont text-black flex justify-center items-center rounded-[10px] cursor-pointer font-medium"
-          onClick={() => {
-            reviewCode(code, setReview, setreviewLoad);
-          }}
-        >
-          Review
         </div>
       </div>
     </div>
